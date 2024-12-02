@@ -18,27 +18,53 @@ const isIncresing = (first: number, second: number) => {
 }
 
 const increasingFlow = (array: string[], sourceOfTruth: boolean) => {
+  let count = 0
   for (let i = 0; i < array.length - 1; i++) {
     const status = isIncresing(Number(array[i]), Number(array[i + 1]))
     const diff = findDifference(Number(array[i]), Number(array[i + 1]))
     if (sourceOfTruth === status && diff <= 3 && diff !== 0) {
-      if (i == array.length - 2) positiveReports += 1
+      if (i === array.length - 2) positiveReports += 1
       else continue
     } else {
-      break
+      count++
+      if (count <= 1) {
+        if (i + 2 === array.length) positiveReports += 1
+        const status = isIncresing(Number(array[i]), Number(array[i + 2]))
+        const diff = findDifference(Number(array[i]), Number(array[i + 2]))
+        if (sourceOfTruth === status && diff <= 3 && diff !== 0) {
+          i++
+          if (i === array.length - 2) positiveReports += 1
+          continue
+        } else {
+          break
+        }
+      }
     }
   }
 }
 
 const descresingFlow = (array: string[], sourceOfTruth: boolean) => {
+  let count = 0
   for (let i = 0; i < array.length - 1; i++) {
     const status = !isIncresing(Number(array[i]), Number(array[i + 1]))
     const diff = findDifference(Number(array[i]), Number(array[i + 1])) * -1
     if (!sourceOfTruth === status && diff <= 3 && diff !== 0) {
-      if (i == array.length - 2) positiveReports += 1
+      if (i === array.length - 2) positiveReports += 1
       else continue
     } else {
-      break
+      count++
+      if (count <= 1) {
+        if (i + 2 === array.length) positiveReports += 1
+        const status = !isIncresing(Number(array[i]), Number(array[i + 2]))
+        const diff = findDifference(Number(array[i]), Number(array[i + 2])) * -1
+        if (!sourceOfTruth === status && diff <= 3 && diff !== 0) {
+          i++
+          if (i === array.length - 2) positiveReports += 1
+          continue
+        } else {
+          break
+        }
+      }
     }
   }
 }
